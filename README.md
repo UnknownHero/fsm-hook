@@ -156,3 +156,5 @@ const diagram = generateMermaidDiagram({
 
 console.log(diagram);
 ```
+
+And put result here - https://www.mermaidchart.com/play
