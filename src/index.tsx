@@ -1,4 +1,4 @@
-import {useReducer, useCallback, useContext, createContext, useDebugValue} from 'react';
+import { useReducer, useCallback, useContext, createContext, useDebugValue } from 'react';
 
 /**
  * Type for State Machine transitions
@@ -138,7 +138,11 @@ const FSMContext = createContext<FSMConfig>({
 });
 
 /**
- * hook for create and use State Machine
+ * Hook for create and use Finite State Machine
+ * Documentation - https://github.com/UnknownHero/fsm-hook/blob/main/README.md
+ *
+ * What is Finite State Machine ? - https://en.wikipedia.org/wiki/Finite-state_machine
+ * Why you need it in React ? - https://react.dev/learn/reacting-to-input-with-state#step-2-determine-what-triggers-those-state-changes
  *
  * @property initialState - initial state of FSM. One of state in transitions (second property)
  * @property transitions - map of states and transitions. { "state": { "transition": "otherState" }, "otherState": {} }
@@ -164,7 +168,7 @@ const useFSM = <TState extends string, TTransition extends string, TTransitionMa
   config?: FSMConfig,
 ) => {
   const globalConfig = useContext(FSMContext);
-  const mergedConfig = {...globalConfig, ...config};
+  const mergedConfig = { ...globalConfig, ...config };
 
   const [state, dispatch] = useReducer(
     (state: FSMState<TState>, action: FSMAction<TState>) =>
@@ -184,7 +188,11 @@ const useFSM = <TState extends string, TTransition extends string, TTransitionMa
    * if pass Generic with predicated (because currentState is runtime value) current state, then will show only available transitions
    */
   const transition = useCallback(
-    <TPredicatedState extends keyof TTransitionMap>(to: TPredicatedState extends keyof TTransitionMap ? keyof TTransitionMap[TPredicatedState] : keyof (typeof transitions)[TState]) => {
+    <TPredicatedState extends keyof TTransitionMap>(
+      to: TPredicatedState extends keyof TTransitionMap
+        ? keyof TTransitionMap[TPredicatedState]
+        : keyof (typeof transitions)[TState],
+    ) => {
       if (transitions[state.currentState][to as unknown as TTransition]) {
         if (mergedConfig.logLevel === 'debug') {
           logger.log(`Transitioning from ${state.currentState} to ${to.toString()}`);
@@ -212,7 +220,7 @@ const useFSM = <TState extends string, TTransition extends string, TTransitionMa
           `Undoing from ${state.currentState} to ${state.history[state.history.length - 1]}`,
         );
       }
-      dispatch({type: 'UNDO'});
+      dispatch({ type: 'UNDO' });
     } else {
       if (mergedConfig.logLevel !== 'none') {
         logger.warn('No history to undo');
@@ -274,13 +282,13 @@ interface FSMProviderProps {
  *
  * @version 0.1.0
  */
-function FSMProvider({config, children}: FSMProviderProps) {
+function FSMProvider({ config, children }: FSMProviderProps) {
   return <FSMContext.Provider value={config}>{children}</FSMContext.Provider>;
 }
 
-
 /**
  * Generate Mermaid diagram from transitions. You can pass result in https://www.mermaidchart.com/play
+ * Mermaid diagram is a simple way to show FSM
  *
  * @property transitions - states and transitions of FSM. Second param of useFSM
  *
@@ -311,4 +319,4 @@ const generateMermaidDiagram = <T extends string, N extends string>(
   return mermaidCode;
 };
 
-export {useFSM, FSMProvider, generateMermaidDiagram};
+export { useFSM, FSMProvider, generateMermaidDiagram };
