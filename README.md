@@ -18,6 +18,7 @@ Wiki - https://en.wikipedia.org/wiki/Finite-state_machine
 - typesafe FSM map
 - typesafe transition
 - 100% code coverage
+- size: 698 B (with all dependencies, minified and brotlied)
 
 ### What is not
 
