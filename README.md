@@ -70,7 +70,7 @@ const App = () => {
     <div>
       <p>Current State: {currentState}</p>
       <p>Available Transitions: {availableTransitions().join(", ")}</p>
-      <button onClick={() => transition("typing")}>Start Typing</button>
+      <button onClick={() => transition<"idle">("typing")}>Start Typing</button>
       <button onClick={() => transition("submitting")}>Submit</button>
       <button onClick={() => transition("canceling")}>Cancel</button>
       <button onClick={() => transition("success")}>Success</button>
