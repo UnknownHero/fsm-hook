@@ -41,12 +41,12 @@ Full example:
 ```tsx
 import { FSMProvider, useFSM } from "fsm-hook";
 
-const App = () => {
-  const customLogger = {
-    log: (message: string) => console.log(message),
-    warn: (message: string) => console.warn(message),
-  };
+const customLogger = {
+  log: (message: string) => console.log(message),
+  warn: (message: string) => console.warn(message),
+};
 
+const App = () => {
   const {
     currentState,
     transition,

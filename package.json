@@ -1,6 +1,6 @@
 {
   "name": "fsm-hook",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -66,5 +66,4 @@
       "limit": "10 kB"
     }
   ]
-
 }
