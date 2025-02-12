@@ -31,6 +31,18 @@ Wiki - https://en.wikipedia.org/wiki/Finite-state_machine
 - Component Render: It does not handle component rendering.
 
 
+### Comparison 
+
+#### With Statex/store:
+According to Statex/store documentation, "It is comparable to libraries like Zustand, Redux, and Pinia."
+
+So, there's no need for further comparison. It's not a pure finite state machine; it's a more complex solution. useFSM is a pure finite state machine without additional functionality.
+
+#### With cassiozen/useStateMachine:
+It's a nice and small solution, but it includes side effect handling.
+The code that describes the state machine is about 10 times larger compared to useFSM.
+Additionally, cassiozen/useStateMachine doesn't have history.
+
 ### Install
 
     npm install fsm-hook
