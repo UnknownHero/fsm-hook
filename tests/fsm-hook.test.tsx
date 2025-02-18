@@ -366,6 +366,26 @@ describe('useFSM Hook', () => {
     customLoggerWarnSpy.mockRestore();
   });
 
+  it('should provide next state when pass callback to transition', () => {
+    const {result} = renderHook(() => useFSM(
+      'idle',
+      {
+        idle: {typing: 'typing'},
+        typing: {submitting: 'submitting', canceling: 'idle'},
+        submitting: {success: 'idle', failure: 'fail'},
+        fail: {restart: 'idle'},
+      }
+    ));
+
+    act(()=>{
+      result.current.transition<'idle'>('typing',(newState) => {
+        expect(newState).to.equal('typing');
+      })
+    });
+
+    expect(result.current.currentState).to.equal('typing');
+  });
+
 });
 
 describe('FSMProvider Component', () => {
