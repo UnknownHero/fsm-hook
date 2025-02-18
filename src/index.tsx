@@ -192,7 +192,7 @@ const useFSM = <TState extends string, TTransition extends string, TTransitionMa
       to: TPredicatedState extends keyof TTransitionMap
         ? keyof TTransitionMap[TPredicatedState]
         : keyof (typeof transitions)[TState],
-      callback?: (newState: TState) => void
+      callback?: (newState: TState) => void,
     ) => {
       if (transitions[state.currentState][to as unknown as TTransition]) {
         if (mergedConfig.logLevel === 'debug') {
@@ -203,8 +203,8 @@ const useFSM = <TState extends string, TTransition extends string, TTransitionMa
           type: 'TRANSITION',
           to: transitions[state.currentState][to as unknown as TTransition] as TState,
         });
-        if(callback){
-          const newState = FSMReducer(state,{
+        if (callback) {
+          const newState = FSMReducer(state, {
             type: 'TRANSITION',
             to: transitions[state.currentState][to as unknown as TTransition] as TState,
           });
